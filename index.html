@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Denisha</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main spinning heart */
+        .heart {
+            position: relative;
+            width: 200px;
+            height: 180px;
+            animation: spin 8s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.7));
+            z-index: 10;
+        }
+
+        .heart:before, .heart:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 160px;
+            background: #ff0000;
+            border-radius: 100px 100px 0 0;
+        }
+
+        .heart:before {
+            left: 100px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 11;
+            text-align: center;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Quotes container with amber-400 color */
+        .quotes-container {
+            position: absolute;
+            bottom: 15%;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .quote {
+            display: none;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 10px 0;
+            font-style: italic;
+            color: #fbbf24; /* amber-400 */
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .quote.active {
+            display: block;
+            animation: fadeIn 1.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Floating hearts */
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            opacity: 0;
+            animation: float 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Love lines animation */
+        .love-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .love-line {
+            position: absolute;
+            background: rgba(255, 0, 0, 0.7);
+            height: 2px;
+            transform-origin: left center;
+            animation: drawLine 3s linear forwards;
+            z-index: 0;
+        }
+
+        @keyframes drawLine {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        /* Additional heart elements */
+        .heart-corner {
+            position: absolute;
+            width: 80px;
+            height: 72px;
+            opacity: 0.6;
+            animation: pulse 4s ease infinite;
+        }
+
+        .heart-corner:before, .heart-corner:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 64px;
+            background: #ff0000;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .heart-corner:before {
+            left: 40px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart-corner:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .heart-corner.top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .heart-corner.top-right {
+            top: 20px;
+            right: 20px;
+            transform: rotate(90deg);
+        }
+
+        .heart-corner.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            transform: rotate(270deg);
+        }
+
+        .heart-corner.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            transform: rotate(180deg);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Denisha name animation */
+        .name-container {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .name {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: glow 2s ease-in-out infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff0000, 0 0 20px #ff0000;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #ff0000;
+            }
+        }
+
+        /* Personalized message */
+        .personal-message {
+            position: absolute;
+            top: 20%;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 15px;
+            z-index: 15;
+            font-size: 1.2rem;
+            color: #fff;
+            animation: fadeInOut 8s ease infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="love-lines" id="loveLines"></div>
+        <div class="hearts" id="hearts"></div>
+        
+        <!-- Denisha's name -->
+        <div class="name-container">
+            <div class="name">Denisha</div>
+        </div>
+        
+        <!-- Personalized message -->
+        <div class="personal-message">
+            Every beat of my heart whispers your name...
+        </div>
+        
+        <!-- Corner hearts -->
+        <div class="heart-corner top-left"></div>
+        <div class="heart-corner top-right"></div>
+        <div class="heart-corner bottom-left"></div>
+        <div class="heart-corner bottom-right"></div>
+        
+        <!-- Main heart -->
+        <div class="heart">
+            <div class="text">I Love You<br>Denisha</div>
+        </div>
+        
+        <!-- Quotes -->
+        <div class="quotes-container">
+            <div class="quote active">"Denisha, in your smile I see something more beautiful than the stars."</div>
+            <div class="quote">"You are my today and all of my tomorrows, Denisha."</div>
+            <div class="quote">"Every love story is beautiful, but ours with Denisha is my favorite."</div>
+            <div class="quote">"Denisha, you're the reason I believe in love."</div>
+            <div class="quote">"If I had to choose between loving Denisha and breathing, I would use my last breath to say I love you."</div>
+            <div class="quote">"Denisha, you mean more to me than you'll ever know."</div>
+            <div class="quote">"My heart is and always will be yours, Denisha."</div>
+            <div class="quote">"Denisha, you're my favorite place to go when my mind searches for peace."</div>
+        </div>
+    </div>
+
+    <script>
+        // Rotate quotes
+        let currentQuote = 0;
+        const quotes = document.querySelectorAll('.quote');
+        
+        function changeQuote() {
+            quotes[currentQuote].classList.remove('active');
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quotes[currentQuote].classList.add('active');
+        }
+        
+        setInterval(changeQuote, 5000);
+
+        // Create floating hearts with Denisha's name sometimes
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ff6347', '#ff4500'];
+            
+            for (let i = 0; i < 40; i++) { // Increased number of floating elements
+                const element = document.createElement('div');
+                element.classList.add('floating-heart');
+                
+                // Random properties
+                const size = Math.random() * 30 + 10;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 3 + 3;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Sometimes use "Denisha" instead of heart
+                if (Math.random() > 0.8) { // 20% chance
+                    element.innerHTML = 'Denisha';
+                    element.style.fontFamily = 'cursive';
+                    element.style.fontWeight = 'bold';
+                } else {
+                    element.innerHTML = '❤';
+                }
+                
+                element.style.left = `${left}%`;
+                element.style.fontSize = `${size}px`;
+                element.style.color = color;
+                element.style.animationDelay = `${delay}s`;
+                element.style.animationDuration = `${duration}s`;
+                
+                heartsContainer.appendChild(element);
+            }
+        }
+
+        // Create love lines
+        function createLoveLines() {
+            const container = document.getElementById('loveLines');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // Create lines that form a heart shape
+            const points = [
+                // Left curve
+                {x1: width/2, y1: height/3, x2: width/4, y2: height/2, angle: -45},
+                {x1: width/4, y1: height/2, x2: width/2, y2: height*2/3, angle: 45},
+                // Right curve
+                {x1: width/2, y1: height/3, x2: width*3/4, y2: height/2, angle: 45},
+                {x1: width*3/4, y1: height/2, x2: width/2, y2: height*2/3, angle: -45},
+                // V at bottom
+                {x1: width/2, y1: height*2/3, x2: width/2, y2: height*3/4, angle: 0}
+            ];
+            
+            points.forEach((point, index) => {
+                const line = document.createElement('div');
+                line.classList.add('love-line');
+                
+                // Calculate length using distance formula
+                const length = Math.sqrt(
+                    Math.pow(point.x2 - point.x1, 2) + 
+                    Math.pow(point.y2 - point.y1, 2)
+                );
+                
+                // Position and style the line
+                line.style.width = `${length}px`;
+                line.style.left = `${point.x1}px`;
+                line.style.top = `${point.y1}px`;
+                line.style.transform = `rotate(${point.angle}deg)`;
+                line.style.animationDelay = `${index * 0.5}s`;
+                
+                container.appendChild(line);
+            });
+            
+            // Reset animation by recreating lines
+            setInterval(() => {
+                container.innerHTML = '';
+                createLoveLines();
+            }, 8000);
+        }
+        
+        createHearts();
+        createLoveLines();
+    </script>
+</body>
+</html>
