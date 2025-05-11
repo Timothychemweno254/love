@@ -107,7 +107,7 @@
             line-height: 1.6;
             margin: 10px 0;
             font-style: italic;
-            color: #fbbf24; /* amber-400 */
+            color: #fbbf24;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
         }
 
@@ -284,6 +284,97 @@
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
+
+        /* Love Button */
+        .love-button {
+            position: absolute;
+            bottom: 5%;
+            z-index: 100;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, #ff0000, #ff69b4);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+
+        .love-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Celebration elements */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .celebration-flower {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            animation: fall 5s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti 5s ease-out forwards;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Response message */
+        .response-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 2000;
+            display: none;
+            font-size: 1.5rem;
+            animation: fadeIn 1s ease;
+        }
     </style>
 </head>
 <body>
@@ -314,15 +405,27 @@
         
         <!-- Quotes -->
         <div class="quotes-container">
-            <div class="quote active">"Denisha, in your smile I see something more beautiful than the stars."</div>
+            <div class="quote active">"Babe, in your smile I see something more beautiful than the stars."</div>
             <div class="quote">"You are my today and all of my tomorrows, Denisha."</div>
             <div class="quote">"Every love story is beautiful, but ours with Denisha is my favorite."</div>
-            <div class="quote">"Denisha, you're the reason I believe in love."</div>
+            <div class="quote">"Hunny, you're the reason I believe in love."</div>
             <div class="quote">"If I had to choose between loving Denisha and breathing, I would use my last breath to say I love you."</div>
-            <div class="quote">"Denisha, you mean more to me than you'll ever know."</div>
-            <div class="quote">"My heart is and always will be yours, Denisha."</div>
-            <div class="quote">"Denisha, you're my favorite place to go when my mind searches for peace."</div>
+            <div class="quote">"Beb, you mean more to me than you'll ever know."</div>
+            <div class="quote">"My heart is and always will be yours, Lovie."</div>
+            <div class="quote">"Hunny, you're my favorite place to go when my mind searches for peace."</div>
         </div>
+
+        <!-- Love Button -->
+        <button class="love-button" id="loveButton">click me if you Love Me Back?</button>
+    </div>
+
+    <!-- Celebration elements -->
+    <div class="celebration" id="celebration"></div>
+
+    <!-- Response message -->
+    <div class="response-message" id="responseMessage">
+        <h2>Woow you Love Me Too! ❤️</h2>
+        <p>Preparing your special message...</p>
     </div>
 
     <script>
@@ -343,7 +446,7 @@
             const heartsContainer = document.getElementById('hearts');
             const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ff6347', '#ff4500'];
             
-            for (let i = 0; i < 40; i++) { // Increased number of floating elements
+            for (let i = 0; i < 40; i++) {
                 const element = document.createElement('div');
                 element.classList.add('floating-heart');
                 
@@ -354,8 +457,7 @@
                 const duration = Math.random() * 3 + 3;
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 
-                // Sometimes use "Denisha" instead of heart
-                if (Math.random() > 0.8) { // 20% chance
+                if (Math.random() > 0.8) {
                     element.innerHTML = 'Denisha';
                     element.style.fontFamily = 'cursive';
                     element.style.fontWeight = 'bold';
@@ -379,15 +481,11 @@
             const width = window.innerWidth;
             const height = window.innerHeight;
             
-            // Create lines that form a heart shape
             const points = [
-                // Left curve
                 {x1: width/2, y1: height/3, x2: width/4, y2: height/2, angle: -45},
                 {x1: width/4, y1: height/2, x2: width/2, y2: height*2/3, angle: 45},
-                // Right curve
                 {x1: width/2, y1: height/3, x2: width*3/4, y2: height/2, angle: 45},
                 {x1: width*3/4, y1: height/2, x2: width/2, y2: height*2/3, angle: -45},
-                // V at bottom
                 {x1: width/2, y1: height*2/3, x2: width/2, y2: height*3/4, angle: 0}
             ];
             
@@ -395,13 +493,11 @@
                 const line = document.createElement('div');
                 line.classList.add('love-line');
                 
-                // Calculate length using distance formula
                 const length = Math.sqrt(
                     Math.pow(point.x2 - point.x1, 2) + 
                     Math.pow(point.y2 - point.y1, 2)
                 );
                 
-                // Position and style the line
                 line.style.width = `${length}px`;
                 line.style.left = `${point.x1}px`;
                 line.style.top = `${point.y1}px`;
@@ -411,12 +507,60 @@
                 container.appendChild(line);
             });
             
-            // Reset animation by recreating lines
             setInterval(() => {
                 container.innerHTML = '';
                 createLoveLines();
             }, 8000);
         }
+
+        // Celebration function
+        function startCelebration() {
+            const celebration = document.getElementById('celebration');
+            const responseMessage = document.getElementById('responseMessage');
+            const flowers = ['🌸', '🌹', '💐', '🌺', '🌷', '🏵️', '🌻', '🌼'];
+            const colors = ['#ff0000', '#ff69b4', '#ff1493', '#ff6347', '#ff4500', '#ff00ff', '#ff1493', '#ff69b4'];
+            
+            // Show celebration elements
+            celebration.style.display = 'block';
+            responseMessage.style.display = 'block';
+            
+            // Create flowers
+            for (let i = 0; i < 100; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('celebration-flower');
+                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                
+                flower.style.left = `${Math.random() * 100}%`;
+                flower.style.fontSize = `${Math.random() * 30 + 20}px`;
+                flower.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                flower.style.animationDelay = `${Math.random() * 2}s`;
+                
+                celebration.appendChild(flower);
+            }
+            
+            // Create confetti
+            for (let i = 0; i < 200; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                
+                celebration.appendChild(confetti);
+            }
+            
+            // Redirect to WhatsApp after 5 seconds
+            setTimeout(() => {
+                window.location.href = "https://wa.me/254701766236?text=I%20love%20you%20too!%20❤️";
+            }, 5000);
+        }
+
+        // Button click event
+        document.getElementById('loveButton').addEventListener('click', startCelebration);
         
         createHearts();
         createLoveLines();
